@@ -1,12 +1,9 @@
 package com.zipcodewilmington.phonebook;
 
 import java.lang.reflect.Array;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 //import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 
 /**
  * Created by leon on 1/23/18.
@@ -17,11 +14,11 @@ public class PhoneBook {
     private final Map<String, List<String>> phonebook;
 
     public PhoneBook(Map<String, List<String>> map) {
-        this.phonebook = null;
+        this.phonebook = map;
     }
 
     public PhoneBook() {
-        this(null);
+        this.phonebook = new LinkedHashMap<String, List<String>>();
     }
 
     public void add(String name, String phoneNumber) {
@@ -31,11 +28,11 @@ public class PhoneBook {
     }
 
     public void addAll(String name, String... phoneNumbers) {
+        ArrayList<String> temp = new ArrayList<String>();
         for(int i = 0; i < phoneNumbers.length; i++) {
-            ArrayList<String> temp = new ArrayList<String>();
             temp.add(phoneNumbers[i]);
-            this.phonebook.put(name, temp);
         }
+        this.phonebook.put(name, temp);
     }
 
     public void remove(String name) {
@@ -52,7 +49,7 @@ public class PhoneBook {
 
     public String reverseLookup(String phoneNumber){
         for (Map.Entry<String, List<String>> entry : this.phonebook.entrySet()) {
-            if(entry.getValue().equals(phoneNumber)){
+            if(entry.getValue().contains(phoneNumber)){
                 return entry.getKey();
             }
         }
@@ -60,10 +57,14 @@ public class PhoneBook {
     }
 
     public List<String> getAllContactNames() {
-        return null;
+        List<String> returnList = new ArrayList<>();
+        for (String entry : this.phonebook.keySet()){
+            returnList.add(entry);
+        }
+        return returnList;
     }
 
     public Map<String, List<String>> getMap() {
-        return null;
+        return this.phonebook;
     }
 }
